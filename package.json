@@ -1,0 +1,83 @@
+{
+  "name": "angular8bestprac",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "yarn lint && ng build",
+    "test": "yarn lint && ng test",
+    "lint:prettier": "prettier --write src/**/*.{ts,tsx,scss,md}",
+		"lint:stylelint": "stylelint --fix src/**/*.scss",
+		"lint:tslint": "tslint --fix src/**/*.{ts,tsx} -p tsconfig.json",
+		"lint": "yarn lint:prettier && yarn lint:tslint && yarn lint:stylelint",
+    "e2e": "ng e2e",
+    "watch": "watch 'clear && npm run -s test | tap-nirvana && npm run -s lint' src"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.scss": [
+      "stylelint --syntax=scss",
+      "prettier --parser postcss --write",
+      "git add"
+    ],
+    "*.{js,ts,tsx}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~8.1.2",
+    "@angular/common": "~8.1.2",
+    "@angular/compiler": "~8.1.2",
+    "@angular/core": "~8.1.2",
+    "@angular/forms": "~8.1.2",
+    "@angular/platform-browser": "~8.1.2",
+    "@angular/platform-browser-dynamic": "~8.1.2",
+    "@angular/router": "~8.1.2",
+    "rxjs": "~6.4.0",
+    "tslib": "^1.9.0",
+    "zone.js": "~0.9.1"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~0.801.2",
+    "@angular/cli": "~8.1.2",
+    "@angular/compiler-cli": "~8.1.2",
+    "@angular/language-service": "~8.1.2",
+    "@types/node": "~8.9.4",
+    "@types/jasmine": "~3.3.8",
+    "@types/jasminewd2": "~2.0.3",
+    "codelyzer": "^5.0.0",
+    "jasmine-core": "~3.4.0",
+    "jasmine-spec-reporter": "~4.2.1",
+    "karma": "~4.1.0",
+    "karma-chrome-launcher": "~2.2.0",
+    "karma-coverage-istanbul-reporter": "~2.0.1",
+    "karma-jasmine": "~2.0.1",
+    "karma-jasmine-html-reporter": "^1.4.0",
+    "protractor": "~5.4.0",
+    "ts-node": "~7.0.0",
+    "tslint": "~5.15.0",
+    "typescript": "~3.4.3",
+    "cssnano": "4.1.10",
+		"husky": "3.0.5",
+		"lint-staged": "9.2.5",
+		"postcss-extend": "1.0.5",
+		"postcss-import": "12.0.1",
+		"postcss-merge-rules": "4.0.3",
+		"postcss-nesting": "7.0.1",
+		"postcss-preset-env": "6.7.0",
+		"postcss-pxtorem": "4.0.1",
+		"prettier": "^1.18.2",
+		"stylelint": "10.1.0",
+		"stylelint-config-css-modules": "1.4.0",
+		"stylelint-config-prettier": "5.2.0",
+		"stylelint-config-recommended-scss": "3.3.0",
+		"stylelint-order": "3.1.0",
+		"stylelint-scss": "3.10.1"
+  }
+}
