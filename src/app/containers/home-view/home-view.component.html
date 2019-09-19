@@ -1,1 +1,6 @@
-<ng-container #homeViewContainer>Home View</ng-container>
+<div><ng-container appDynamicLoader [data]="selected" >Home View
+
+    
+    <button type="button" (click) ="addComp('Home')">Add Comp</button>
+</ng-container>
+</div>

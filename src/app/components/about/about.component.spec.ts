@@ -1,15 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { DYNAMIC_COMPONENT_DATA, ComponentType } from '../../constants';
 
-import { HomeComponent } from './home.component';
-import { ComponentType, DYNAMIC_COMPONENT_DATA } from '../../constants';
+import { AboutComponent } from './about.component';
 import { CommonModule } from '@angular/common';
 
-describe('HomeComponent', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+describe('AboutComponent', () => {
+  let component: AboutComponent;
+  let fixture: ComponentFixture<AboutComponent>;
   const data = {
     meta: {
-      type: ComponentType.home
+      type: ComponentType.about
     },
     data: {
       text: 'this is some Home View text'
@@ -20,7 +20,7 @@ describe('HomeComponent', () => {
 
     const staticProvider = [{ provide: DYNAMIC_COMPONENT_DATA, useValue: data }];
     TestBed.configureTestingModule({
-      declarations: [HomeComponent],
+      declarations: [AboutComponent],
       imports: [CommonModule],
       providers: [staticProvider]
     })
@@ -28,7 +28,7 @@ describe('HomeComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HomeComponent);
+    fixture = TestBed.createComponent(AboutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

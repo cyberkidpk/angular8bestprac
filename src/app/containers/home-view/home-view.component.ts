@@ -1,6 +1,8 @@
-import { Component, OnInit, AfterViewChecked, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
-import { HomeComponent } from '../../components/home/home.component';
-import { AppComponent } from '../../app.component';
+import { Component, OnInit, AfterViewChecked, ComponentFactoryResolver, Injector, Input, ViewChildren } from '@angular/core';
+import { DynamicComponentData } from '../../models/dy.comp.data.model';
+import {DynamicLoaderDirective} from '../../directives/data.loader.directive';
+import { DYNAMIC_COMPONENT_DATA, ComponentType } from '../../constants';
+
 
 @Component({
   selector: 'app-home-view',
@@ -8,14 +10,29 @@ import { AppComponent } from '../../app.component';
   styleUrls: ['./home-view.component.css']
 })
 export class HomeViewComponent implements OnInit, AfterViewChecked {
-  @ViewChild('homeViewContainer', { read: ViewContainerRef, static: true })
-  homeView: ViewContainerRef;
+  selected: DynamicComponentData = null;
+  directive: any;
+  @ViewChildren(DynamicLoaderDirective)
+  set setDirective(directive: DynamicLoaderDirective) {
+
+    this.directive = directive;
+  }
+
+
   constructor(private cFactResolve: ComponentFactoryResolver) {
   }
 
   ngOnInit() {
+    this.selected = {
+      meta: {
+        type: ComponentType.home
+      },
+      data: {
+        text: 'this is some Home text'
+      }
+    };
 
-    const componentFactory = this.cFactResolve.resolveComponentFactory(HomeComponent);
+    /* const componentFactory = this.cFactResolve.resolveComponentFactory(HomeComponent);
     const viewContainerRef = this.homeView;
     setTimeout(() => {
       const componentFactoryOne = this.cFactResolve.resolveComponentFactory(AppComponent);
@@ -25,12 +42,30 @@ export class HomeViewComponent implements OnInit, AfterViewChecked {
     viewContainerRef.clear();
 
     const componentRef = viewContainerRef.createComponent(componentFactory);
-    console.log(componentRef);
+    console.log(componentRef); */
 
   }
   ngAfterViewChecked() {
-    console.log(this.homeView);
+   // console.log(this.appDynamicLoader);
 
+
+  }
+  createInjector(data: DynamicComponentData, parentInjector: Injector) {
+    const staticProvider = [{ provide: DYNAMIC_COMPONENT_DATA, useValue: data }];
+
+    return Injector.create(staticProvider, parentInjector);
+  }
+
+  addComp(compName) {
+    this.selected = {
+      meta: {
+        type: ComponentType.about
+      },
+      data: {
+        text: 'this is some Home View text'
+      }
+    };
+    this.directive.last.getComponentFactory(this.selected);
 
   }
 
