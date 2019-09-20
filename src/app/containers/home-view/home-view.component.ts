@@ -65,7 +65,6 @@ export class HomeViewComponent implements OnInit, AfterViewChecked {
         text: 'this is some Home View text'
       }
     };
-    this.directive.last.getComponentFactory(this.selected);
 
   }
 

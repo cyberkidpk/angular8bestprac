@@ -28,19 +28,32 @@ export class DynamicLoaderDirective {
   }
 
   public getComponentFactory(type: ComponentType) {
-    const factories = Array.from<any>(this.resolver._factories.keys());
+    const tarFactObj = this.targetFactoryObject(this.resolver);
+    if (tarFactObj) {
+    const factories = Array.from<any>(tarFactObj.keys());
 
     const factoryClass = factories.find(item =>
       item.prototype.getComponentType && item.prototype.getComponentType() === type
       );
 
     return this.resolver.resolveComponentFactory(factoryClass);
+    }
   }
 
   createInjector(data: DynamicComponentData, parentInjector: Injector) {
     const staticProvider = [{ provide: DYNAMIC_COMPONENT_DATA, useValue: data }];
 
     return Injector.create(staticProvider, parentInjector);
+  }
+  targetFactoryObject(parentObj) {
+    for (const key in parentObj) {
+      if (key === '_factories') {
+
+        return parentObj[key];
+      }
+
+
+    }
   }
 
 }
